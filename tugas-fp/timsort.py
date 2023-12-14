@@ -1,6 +1,8 @@
+import os
 import string
 
-debug = 1  # 2 for full debug, 1 for semi-debug, 0 for none
+debug = int(os.environ.get("DEBUG") if os.environ.get("DEBUG") else 1)
+# 2 for full debug, 1 for semi-debug, 0 for none
 steps = 0
 
 timsort_mode = 0
@@ -17,6 +19,7 @@ Algorithms:
 )
 algo = int(input("Choose which algorithm to use: "))
 
+print("Testing? (i.e., use random strings if yes)")
 testing = ["n", "y"].index(input("Testing [y/n]: ")[0].lower())
 if not testing:
     n = int(input())
@@ -327,8 +330,8 @@ def timsort_brute(inputs: list[str]):
 algorithms = [timsort, mergesort, insertionsort, timsort_brute]
 while algo - 1 not in list(range(len(algorithms))):
     algo = int(input("Invalid algorithm. Choose which algorithm to use: "))
-print(inputs, len(inputs))
+print(f"Unsorted: {inputs} {len(inputs)}")
 res = list(map(lambda x: x.title(), algorithms[algo - 1](inputs)))
-print(res, len(res))
+print(f"Sorted: {res} {len(res)}")
 if debug:
     print(f"Took {steps} steps")
