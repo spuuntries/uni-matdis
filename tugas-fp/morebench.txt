@@ -1,0 +1,39 @@
+Hololive:
+
+1: Took 592 steps
+
+2: Took 544 steps
+
+3: Took 1044 steps
+
+4: Took 2745 steps
+
+=======
+
+Timsort:
+Took 2964 steps
+Took 2895 steps
+Took 2868 steps
+Took 2796 steps
+Took 2809 steps
+
+Merge:
+Took 3386 steps
+Took 3386 steps
+Took 3386 steps
+Took 3386 steps
+Took 3386 steps
+
+Insertion:
+Took 25179 steps
+Took 24197 steps
+Took 22322 steps
+Took 21853 steps
+Took 23262 steps
+
+Timsort Brute:
+Took 62752 steps
+Took 62855 steps
+Took 62792 steps
+Took 62835 steps
+Took 62840 steps

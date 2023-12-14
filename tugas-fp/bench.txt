@@ -1,0 +1,28 @@
+BENCHMARK RESULTS
+
+
+W/O runs optimization:
+Dataset Used:
+ - Random Strings:
+    Took 92941 steps
+    Took 92866 steps
+    Took 92831 steps
+    Took 92969 steps
+
+ - Hololive:
+    Took 3977 steps
+
+W/ runs optimization:
+Dataset Used:
+ - Random Strings:
+    Took 62836 steps
+    Took 62874 steps
+    Took 62856 steps
+    Took 62902 steps
+
+ - Hololive:
+    Took 2745 steps
+
+
+
+n.b. Random Strings not seeded, only used to see stability trend (i.e. line nearly flat, meaning performance is stable for any array of `m` strings of length `n`)
