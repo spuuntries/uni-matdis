@@ -2,7 +2,9 @@ import string
 
 debug = 1  # 2 for full debug, 1 for semi-debug, 0 for none
 steps = 0
-timsort_mode = 0  # 1 = No runs optimization, anything else is with all optimizations.
+
+timsort_mode = 0
+# For brute. 1 = No runs optimization, anything else is with all optimizations.
 
 print(
     """
@@ -10,7 +12,7 @@ Algorithms:
       1: Timsort
       2: Merge Sort
       3: Insertion Sort
-      4: Timsort (Old) - Deprecated, Initial Implementation.
+      4: Timsort (Old) - Deprecated, initial implementation, for runs proof.
 """
 )
 algo = int(input("Choose which algorithm to use: "))
@@ -31,8 +33,6 @@ else:
     # fmt: on
 inputs = list(map(lambda x: x.lower(), inputs))
 charset = string.printable
-
-steps = 0
 
 
 def mergesort(lst):
@@ -329,6 +329,6 @@ while algo - 1 not in list(range(len(algorithms))):
     algo = int(input("Invalid algorithm. Choose which algorithm to use: "))
 print(inputs, len(inputs))
 res = list(map(lambda x: x.title(), algorithms[algo - 1](inputs)))
+print(res, len(res))
 if debug:
     print(f"Took {steps} steps")
-print(res, len(res))
