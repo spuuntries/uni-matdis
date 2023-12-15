@@ -3,39 +3,39 @@ import string
 
 debug = int(os.environ.get("DEBUG") if os.environ.get("DEBUG") else 1)
 # 2 for full debug, 1 for semi-debug, 0 for none
-steps = 0
-
 timsort_mode = 0
 # For brute. 1 = No runs optimization, anything else is with all optimizations.
-
-print(
-    """
-Algorithms:
-      1: Timsort
-      2: Merge Sort
-      3: Insertion Sort
-      4: Timsort (Old) - Deprecated, initial implementation, for runs proof.
-"""
-)
-algo = int(input("Choose which algorithm to use: "))
-
-print("Testing? (i.e., use random strings if yes)")
-testing = ["n", "y"].index(input("Testing [y/n]: ")[0].lower())
-if not testing:
-    n = int(input())
-    inputs = [input() for _ in range(n)]
-else:
-    # fmt: off
-    # testing
-    import random
-    def random_string(n):
-        return "".join(
-            random.choice(string.ascii_letters) for _ in range(random.randint(n // 2, n))
-        )
-    inputs = [random_string(100) for _ in range(300)]
-    # fmt: on
-inputs = list(map(lambda x: x.lower(), inputs))
+steps = 0
 charset = string.printable
+
+if __name__ == "__main__":
+    print(
+        """
+    Algorithms:
+          1: Timsort
+          2: Merge Sort
+          3: Insertion Sort
+          4: Timsort (Old) - Deprecated, initial implementation, for runs proof.
+    """
+    )
+    algo = int(input("Choose which algorithm to use: "))
+
+    print("Testing? (i.e., use random strings if yes)")
+    testing = ["n", "y"].index(input("Testing [y/n]: ")[0].lower())
+    if not testing:
+        n = int(input())
+        inputs = [input() for _ in range(n)]
+    else:
+        # fmt: off
+        # testing
+        import random
+        def random_string(n):
+            return "".join(
+                random.choice(string.ascii_letters) for _ in range(random.randint(n // 2, n))
+            )
+        inputs = [random_string(100) for _ in range(300)]
+        # fmt: on
+    inputs = list(map(lambda x: x.lower(), inputs))
 
 
 def mergesort(lst):
@@ -327,11 +327,12 @@ def timsort_brute(inputs: list[str]):
     return res
 
 
-algorithms = [timsort, mergesort, insertionsort, timsort_brute]
-while algo - 1 not in list(range(len(algorithms))):
-    algo = int(input("Invalid algorithm. Choose which algorithm to use: "))
-print(f"Unsorted: {inputs} {len(inputs)}")
-res = list(map(lambda x: x.title(), algorithms[algo - 1](inputs)))
-print(f"Sorted: {res} {len(res)}")
-if debug:
-    print(f"Took {steps} steps")
+if __name__ == "__main__":
+    algorithms = [timsort, mergesort, insertionsort, timsort_brute]
+    while algo - 1 not in list(range(len(algorithms))):
+        algo = int(input("Invalid algorithm. Choose which algorithm to use: "))
+    print(f"Unsorted: {inputs} {len(inputs)}")
+    res = list(map(lambda x: x.title(), algorithms[algo - 1](inputs)))
+    print(f"Sorted: {res} {len(res)}")
+    if debug:
+        print(f"Took {steps} steps")
