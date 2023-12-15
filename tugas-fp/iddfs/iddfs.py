@@ -41,12 +41,9 @@ def dls(matrix, current, last_branch, start, finish, depth, limit, parents, visi
 
     for n in neighbors:
         parents[n] = current
-
-    if len(neighbors):
-        last_branch.append(current)
-        return dls(
+        path = dls(
             matrix,
-            neighbors[-1],
+            n,
             last_branch,
             start,
             finish,
@@ -55,21 +52,8 @@ def dls(matrix, current, last_branch, start, finish, depth, limit, parents, visi
             parents,
             visited,
         )
-    elif len(last_branch) > 1:
-        branch = last_branch.pop()
-        return dls(
-            matrix,
-            branch,
-            last_branch,
-            start,
-            finish,
-            depth + 1,
-            limit,
-            parents,
-            visited,
-        )
-    else:
-        return False
+        if path:
+            return path
 
 
 result = None
@@ -86,11 +70,15 @@ for depth in range(1, len(mat) * len(mat[0])):
 if not result:
     print("No path was found :<")
 else:
+    print(result)
     for i, r in enumerate(mat):
         for j, e in enumerate(r):
             if (i, j) in result:
-                print("*", end="")
+                if (i, j) != result[0]:
+                    print("*", end=" ")
+                else:
+                    print("$", end=" ")
             else:
-                print(e, end="")
+                print(e, end=" ")
             if j == len(r) - 1:
                 print()
