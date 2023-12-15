@@ -3,8 +3,8 @@ import re
 m, n = map(int, re.split(" +", input()))
 mat = [list(map(int, input().split())) for _ in range(m)]
 
-start = tuple(map(int, input("Starting coords: ").split()))
-end = tuple(map(int, input("End coords: ").split()))
+start = tuple(map(lambda x: int(x) - 1, input("Starting coords: ").split()))
+end = tuple(map(lambda x: int(x) - 1, input("End coords: ").split()))
 
 
 def reconstruct(start, end, parents, res=None):
@@ -16,8 +16,8 @@ def reconstruct(start, end, parents, res=None):
     return reconstruct(parents[start], end, parents, res)
 
 
-def dls(matrix, current, last_branch, start, finish, depth, limit, parents, visited):
-    if depth == limit and current != finish and not len(last_branch):
+def dls(matrix, current, start, finish, depth, limit, parents, visited):
+    if depth == limit and current != finish:
         return False
 
     if current == finish:
@@ -44,7 +44,6 @@ def dls(matrix, current, last_branch, start, finish, depth, limit, parents, visi
         path = dls(
             matrix,
             n,
-            last_branch,
             start,
             finish,
             depth + 1,
@@ -54,12 +53,13 @@ def dls(matrix, current, last_branch, start, finish, depth, limit, parents, visi
         )
         if path:
             return path
+        continue
 
 
 result = None
 
 for depth in range(1, len(mat) * len(mat[0])):
-    res = dls(mat, start, [], start, end, 1, depth, {}, [])
+    res = dls(mat, start, start, end, 1, depth, {}, [])
 
     if not res:
         continue
@@ -70,7 +70,7 @@ for depth in range(1, len(mat) * len(mat[0])):
 if not result:
     print("No path was found :<")
 else:
-    print(result)
+    # print(result)
     for i, r in enumerate(mat):
         for j, e in enumerate(r):
             if (i, j) in result:
