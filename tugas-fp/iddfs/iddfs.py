@@ -5,6 +5,7 @@ mat = [list(map(int, input().split())) for _ in range(m)]
 
 start = tuple(map(lambda x: int(x) - 1, input("Starting coords: ").split()))
 end = tuple(map(lambda x: int(x) - 1, input("End coords: ").split()))
+max_depth = len(list(filter(bool, [item for sublist in mat for item in sublist])))
 
 
 def reconstruct(start, end, parents, res=None):
@@ -23,8 +24,6 @@ def dls(matrix, current, start, finish, depth, limit, parents, visited):
     if current == finish:
         return reconstruct(current, start, parents)
 
-    visited.append(current)
-
     neighbors = list(
         filter(
             lambda x: bool(x) and x not in visited and bool(matrix[x[0]][x[1]]),
@@ -41,6 +40,7 @@ def dls(matrix, current, start, finish, depth, limit, parents, visited):
 
     for n in neighbors:
         parents[n] = current
+        visited.append(n)
         path = dls(
             matrix,
             n,
@@ -53,13 +53,14 @@ def dls(matrix, current, start, finish, depth, limit, parents, visited):
         )
         if path:
             return path
+        visited.remove(n)
         continue
 
 
 result = None
 
-for depth in range(1, len(mat) * len(mat[0])):
-    res = dls(mat, start, start, end, 1, depth, {}, [])
+for depth in range(1, max_depth):
+    res = dls(mat, start, start, end, 1, depth, {}, [start])
 
     if not res:
         continue
