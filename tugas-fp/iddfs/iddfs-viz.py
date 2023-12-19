@@ -1,8 +1,9 @@
 from asciimatics.screen import Screen
 from time import sleep
+import time
 import re
 
-refresh_speed = 0.05
+refresh_speed = 0.1
 m, n = map(int, re.split(" +", input()))
 mat = [list(map(int, input().split())) for _ in range(m)]
 
@@ -82,6 +83,7 @@ def dls(matrix, current, start, finish, depth, limit, parents, visited):
 visualize(screen, mat, [])
 
 result = None
+s_time = time.time()
 
 for depth in range(1, max_depth):
     res = dls(mat, start, start, end, 1, depth, {}, [start])
@@ -92,7 +94,10 @@ for depth in range(1, max_depth):
     result = res
     break
 
+e_time = time.time()
 screen.close()
+
+print(f"Execution took: {e_time - s_time} secs")
 
 if not result:
     print("No path was found :<")

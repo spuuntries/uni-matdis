@@ -332,7 +332,14 @@ if __name__ == "__main__":
     while algo - 1 not in list(range(len(algorithms))):
         algo = int(input("Invalid algorithm. Choose which algorithm to use: "))
     print(f"Unsorted: {inputs} {len(inputs)}")
-    res = list(map(lambda x: x.title(), algorithms[algo - 1](inputs)))
-    print(f"Sorted: {res} {len(res)}")
+    res = "\n".join(
+        list(
+            map(
+                lambda x: f"{x[0]+1}. {x[1].title()}",
+                enumerate(algorithms[algo - 1](inputs)),
+            )
+        )
+    )
+    print(f"Sorted: \n{res}")
     if debug:
         print(f"Took {steps} steps")

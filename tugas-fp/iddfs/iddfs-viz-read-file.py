@@ -1,12 +1,32 @@
+from asciimatics.screen import Screen
+from time import sleep
 import time
 import re
 
-m, n = map(int, re.split(" +", input()))
-mat = [list(map(int, input().split())) for _ in range(m)]
+refresh_speed = 0.005
+with open("./maze.txt") as f:
+    content = f.read().split("\n")
+    _ = content.pop(0)
+    mat = [list(map(int, c)) for c in content]
 
 start = tuple(map(lambda x: int(x) - 1, input("Starting coords: ").split()))
 end = tuple(map(lambda x: int(x) - 1, input("End coords: ").split()))
 max_depth = len(list(filter(bool, [item for sublist in mat for item in sublist])))
+
+screen = Screen.open()
+
+
+def visualize(screen: Screen, mat, path):
+    for i, row in enumerate(mat):
+        for j, cell in enumerate(row):
+            if (i, j) in path:
+                screen.print_at("*", j, i)
+            elif cell == 1:
+                screen.print_at(".", j, i)
+            else:
+                screen.print_at("X", j, i)
+    screen.refresh()
+    sleep(refresh_speed)
 
 
 def reconstruct(start, end, parents, res=None):
@@ -19,11 +39,15 @@ def reconstruct(start, end, parents, res=None):
 
 
 def dls(matrix, current, start, finish, depth, limit, parents, visited):
+    visualize(screen, matrix, reconstruct(current, start, parents))
+
     if depth == limit and current != finish:
         return False
 
     if current == finish:
-        return reconstruct(current, start, parents)
+        recons = reconstruct(current, start, parents)
+        visualize(screen, matrix, recons)
+        return recons
 
     neighbors = list(
         filter(
@@ -58,6 +82,8 @@ def dls(matrix, current, start, finish, depth, limit, parents, visited):
         continue
 
 
+visualize(screen, mat, [])
+
 result = None
 s_time = time.time()
 
@@ -71,6 +97,8 @@ for depth in range(1, max_depth):
     break
 
 e_time = time.time()
+screen.close()
+
 print(f"Execution took: {e_time - s_time} secs")
 
 if not result:
